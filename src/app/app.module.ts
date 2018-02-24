@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { DataService } from './service/data.service';
 import { HttpModule } from '@angular/http';
-
+import {FormsModule, ReactiveFormsModule} from '@angular/forms'
 
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -21,7 +21,9 @@ import { routes } from './app.router';
   imports: [
     BrowserModule,
     HttpModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    FormsModule,
+    ReactiveFormsModule
     
   ],
   providers: [DataService, UtilityService],
