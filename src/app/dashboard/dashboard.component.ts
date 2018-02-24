@@ -17,6 +17,7 @@ export class DashboardComponent implements OnInit {
   public firstName;
   public lastName;
   public age;
+  consumerData;
   public phoneNumber;
   private errorMessage;
   private systemTransactions = [];
@@ -28,6 +29,7 @@ export class DashboardComponent implements OnInit {
     }
 
   ngOnInit() {
+    this.consumerData =  this.sharedService.getconsmer();
     this.getAllTransactions();
     this.getAllUtility();
     this.createForm();
@@ -90,7 +92,11 @@ export class DashboardComponent implements OnInit {
   getAllUtility(){
     this.httpService.get("http://localhost:3000/api/UtilityDetail")
     .subscribe((res: any) =>{
-      this.allUtility = res;
+      const data = res;
+      data.forEach(element => {
+        if(element.propertyId ===  this.consumerData.propertyId)
+        this.allUtility.push(element);
+      });
      });
   }
   counter(){
@@ -129,13 +135,13 @@ export class DashboardComponent implements OnInit {
  }
 
  public createUtility(data){
-  var consumerData =  this.sharedService.getconsmer();
+
   const formdata = data.value;
    const payload =  {
     $class: "org.capita.UtilityDetail",
     "utilityUniqueId": 'UID' + Math.floor((Math.random() * 100) + 1),
     "utilityType": formdata.utilityType,
-    "propertyId": consumerData.propertyId,
+    "propertyId": this.consumerData.propertyId,
     "supplierId":  formdata.supplier,
     "endDate": formdata.endDate,
     "startDate": formdata.startDate,
