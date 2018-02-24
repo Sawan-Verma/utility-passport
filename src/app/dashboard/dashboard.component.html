@@ -1,66 +1,130 @@
 <header class="header-wrap">
-    <img src="../../assets/images/header.png" alt="">
+  <img src="../../assets/images/header.png" alt="">
 </header>
-<div class="sign-out text-right"><a href=""><i class="fa fa-power-off"></i> Sign Out</a></div>
-<div class="container dashboard"> 
+<div class="sign-out text-right">
+  <a href="">
+    <i class="fa fa-power-off"></i> Sign Out</a>
+</div>
+<div class="container dashboard">
   <div class="row">
-    <div class="col-sm-2 profile-img" >
+    <div class="col-sm-2 profile-img">
       <img src="./../assets/images/default_avatar.png" alt="">
     </div>
     <div class="col-sm-10">
-        <div class="profile-detail">
-          <h3>Utility passport Id -AHJJBCJHS542654</h3>
-           <ul>
-            <li><span class="text-left">First Name</span><span class="text-left detail">{{firstName}}</span></li>
-            <li><span class="text-left">Last Name </span><span class="text-left detail">{{lastName}}</span></li>
-            <li><span class="text-left">Address</span><span class="text-left detail"> Prestige Shantiniketan, Crescent 3, 8th Floor, Main Rd, Whitefield, Bengaluru, Karnataka 560048, India</span></li>
-            <li><span class="text-left">Mobile</span><span class="text-left detail">{{phoneNumber}}</span></li>
-          </ul>
+      <div class="profile-detail">
+        <h3>Utility passport Id - upid{{uniquePassportId}}</h3>
+        <ul>
+          <li><span class="text-left">First Name</span><span class="text-left detail">{{firstName}}</span></li>
+          <li><span class="text-left">Last Name </span><span class="text-left detail">{{lastName}}</span></li>
+          <li><span class="text-left">Address</span><span class="text-left detail"> Prestige Shantiniketan, Crescent 3, 8th Floor, Main Rd, Whitefield, Bengaluru, Karnataka 560048, India</span></li>
+          <li><span class="text-left">Mobile</span><span class="text-left detail">{{phoneNumber}}</span></li>
+        </ul>
+      </div>
+      <p class="reset"></p>
+      <div class="associated-utility">
+        <h3>Associated Utility</h3>
+        <div class="float-right">
+          <button class="btn btn-utility" data-toggle="modal" data-target="#addUtilityModal">Add Utility</button>
         </div>
-        <p class="reset"></p>
-        <div class="associated-utility">
-          <h3>Associated Utility</h3>
-          <ul>
-            <li>
-              <div class="block"><img src="./../assets/images/Virgin_Mobile.png" alt=""></div>
-              <br/><a href="" class="view-link">View / Edit</a>
-            </li>
-            <li>
-              <div class="block"><img src="./../assets/images/Virgin_Mobile.png" alt=""></div>
-              <br/><a href="" class="view-link">View / Edit</a>
-            </li>
-            <li>
-              <div class="block"><img src="./../assets/images/Virgin_Mobile.png" alt=""></div>
-              <br/><a href="" class="view-link">View / Edit</a>
-            </li>
-            <li>
-              <div class="block"><img src="./../assets/images/Virgin_Mobile.png" alt=""></div>
-              <br/><a href="" class="view-link">View / Edit</a>
-            </li>
-          </ul>
-        </div>
+
+        <ul class="reset">
+          <li *ngFor="let x of allUtility">
+            <div class="block">
+              <img src="./../assets/images/British-Gas-logo.png" alt="">
+            </div>
+            <br/>
+            <a class="view-link" (click)="utilityDetails(x)">View / Edit</a>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>
+
 <div class="containter">
   <div class="row">
     <div class="col-sm-12">
       <div class="transaction-block">
+        <h3>All Transactions</h3>
         <ul>
-          <li class="block-list">
+          <li class="block-list" *ngFor="let x of allTransactions">
             <div class="block">
-              <p>Block No. 1</p>
-              <span></span>
-            </div>
-          </li>
-          <li class="block-list">
-            <div class="block">
-              <p>Block No. 1</p>
-              <span></span>
+              <p>
+                <b>Block No:</b>{{count}}
+                <p>
+                  <p>
+                    <b>Transaction:</b> {{showDate(x.transactionTimestamp)}}</p>
+                  <p>
+                    <b>Transaction Type:</b> {{showTransactionType(x.transactionType)}}</p>
             </div>
           </li>
         </ul>
       </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal for add utility -->
+
+<!-- Modal -->
+<div id="addUtilityModal" class="modal open" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content login-dialog">
+      <div class="modal-header">
+        <h4 class="modal-title">Add Utility</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <form [formGroup]="addUtilityForm">
+        <div class="modal-body">
+
+          <div class="form-group text-left">
+            <label for="utilityType">Utility type</label>
+            <select formControlName = "utilityType" class="form-control" id="utilityType">
+              <option value="Gas">Gas</option>
+              <option value="Gas">Phone</option>
+              <option value="Gas">Eletricity</option>
+            </select>
+          </div>
+          <div class="form-group text-left">
+            <label for="startDate">Start date</label>
+            <!-- <input type="date" formControlName="startDate"  class="form-control"> -->
+            <div class="input-group date" data-provide="datepicker">
+              <input type="text" class="form-control" formControlName="startDate">
+              <div class="input-group-addon">
+                <span class="glyphicon glyphicon-th"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group text-left">
+            <label for="endDate">End date</label>
+            <!-- <input type="date" formControlName="endDate" class="form-control"> -->
+            <div class="input-group date" data-provide="datepicker">
+              <input type="text" class="form-control" formControlName="endDate">
+              <div class="input-group-addon">
+                <span class="glyphicon glyphicon-th"></span>
+              </div>
+            </div>
+          </div>
+          <div class="form-group text-left">
+            <label for="supplier">Supplier</label>
+            <select formControlName = "supplier" class="form-control" id="supplier">
+              <option>Supplier 1 </option>
+              <option>Supplier 2 </option>
+              <option>Supplier 3 </option>
+            </select>
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button (click)="createAssetsBank(myForm);" type="submit" class="btn btn-utility" data-dismiss="modal">Add</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

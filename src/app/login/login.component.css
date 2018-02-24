@@ -69,16 +69,17 @@
      text-decoration: underline;
      font-weight: 500;
      font-size: 12px;
+     cursor: pointer;
  }
- .btn-utility{
-     color: #fff;
-     background-color: #f99a12;
-     border-color: #f99a12;
-     border-radius: 20px;
-     padding: .375rem 1.75rem;
+ 
+
+
+ /*--------------------------------------------- */
+ .login-dialog .modal-header{ 
+    background: #f99a12;
+    color:#fff;
  }
- .btn-utility:hover{
-     color: #fff;
-     background-color: #fd7e14;
-     border-color: #fd7e14;
+
+ .login-dialog .modal-header .close{
+     color:#fff;
  }
