@@ -34,11 +34,11 @@
     float: left;
     color: #666;
 }
-.profile-detail ul li span{
-    display: inline-block;
+.profile-detail ul li >div{
     width: 20%;
+    float: left;
 }
-.profile-detail ul li span.detail{
+.profile-detail ul li >div.detail{
     margin-left:20%;
     width: 60%;
 }.associated-utility ul{

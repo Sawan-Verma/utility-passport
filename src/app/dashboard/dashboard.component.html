@@ -15,24 +15,24 @@
         <h3>Utility passport Id -AHJJBCJHS542654</h3>
         <ul>
           <li>
-            <span class="text-left">First Name</span>
-            <span class="text-left detail">ABC</span>
+            <div class="text-left">First Name</div>
+            <div class="text-left detail">ABC</div>
           </li>
           <li>
-            <span class="text-left">Last Name </span>
-            <span class="text-left detail">XYZ</span>
+            <div class="text-left">Last Name </div>
+            <div class="text-left detail">XYZ</div>
           </li>
           <li>
-            <span class="text-left">Address</span>
-            <span class="text-left detail">BangaloreBangalore BangaloreBangalore BangaloreBanga loreBangal oreBangalore</span>
+            <div class="text-left">Address</div>
+            <div class="text-left detail">BangaloreBangalore BangaloreBangalore BangaloreBanga loreBangal oreBangalore</div>
           </li>
           <li>
-            <span class="text-left">Mobile</span>
-            <span class="text-left detail">3465757657</span>
+            <div class="text-left">Mobile</div>
+            <div class="text-left detail">3465757657</div>
           </li>
           <li>
-            <span class="text-left">Email Id</span>
-            <span class="text-left detail">dhsav@uehuf.com</span>
+            <div class="text-left">Email Id</div>
+            <div class="text-left detail">dhsav@uehuf.com</div>
           </li>
         </ul>
       </div>
@@ -40,7 +40,8 @@
       <div class="associated-utility">
         <h3>Associated Utility</h3>
         <div class="float-right">
-          <button class="btn btn-utility" data-toggle="modal" data-target="#addUtilityModal">Add Utility</button>
+            <!-- <button class="btn btn-utility" >Switch Supplier</button> -->
+            <button class="btn btn-utility" data-toggle="modal" data-target="#addUtilityModal">Add Utility</button>
         </div>
         <ul class="reset">
           <li>
@@ -48,7 +49,7 @@
               <img src="./../assets/images/Virgin_Mobile.png" alt="">
             </div>
             <br/>
-            <a href="" class="view-link">View / Edit</a>
+            <a href="" class="view-link" data-toggle="modal" data-target="#switchUtilityModal">View / Edit</a>
           </li>
           <li>
             <div class="block">
@@ -102,7 +103,6 @@
 
 <!-- Modal for add utility -->
 
-<!-- Modal -->
 <div id="addUtilityModal" class="modal open" role="dialog">
   <div class="modal-dialog">
 
@@ -163,3 +163,53 @@
     </div>
   </div>
 </div>
+
+<!-- Modal for switch utility -->
+
+<div id="switchUtilityModal" class="modal open" role="dialog">
+    <div class="modal-dialog">
+  
+      <!-- Modal content-->
+      <div class="modal-content login-dialog">
+        <div class="modal-header">
+          <h4 class="modal-title">Utility Detail</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <form [formGroup]="addUtilityForm">
+          <div class="modal-body">
+  
+            <div class="form-group text-left">
+              <label for="utilityType">Utility type</label>
+              <p>cbcvb</p>
+            </div>
+            <div class="form-group text-left">
+              <label for="startDate">Start date</label>
+              <p>vvcbv</p>
+            </div>
+  
+            <div class="form-group text-left">
+              <label for="endDate">End date</label>
+              <p>cxxvcx</p>
+            </div>
+            <div class="form-group text-left">
+                <label for="supplier">Supplier</label>
+                <p>cxxvcx</p>
+              </div>
+            <div class="form-group text-left">
+              <label for="supplier">New Supplier</label>
+              <select class="form-control" id="supplier">
+                <option>Supplier 4 </option>
+                <option>Supplier 5 </option>
+                <option>Supplier 6 </option>
+              </select>
+            </div>
+          </div>
+  
+          <div class="modal-footer">
+            <button (click)="createAssetsBank(myForm);" type="submit" class="btn btn-utility" data-dismiss="modal">Switch suuplier</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
