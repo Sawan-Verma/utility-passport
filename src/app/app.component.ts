@@ -43,9 +43,6 @@ export class AppComponent {
       this.systemTransactions = systemList
       this.performedTransactions = performedList;
       this.allTransactions = tempList;
-      console.log(this.allTransactions);
-      console.log(this.systemTransactions);
-      console.log(this.performedTransactions);
     },
       error =>{
         if(error == 'Server error'){

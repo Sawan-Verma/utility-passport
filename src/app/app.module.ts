@@ -11,6 +11,7 @@ import { UtilityDetailComponent } from './utility-detail/utility-detail.componen
 import { UtilityService } from './utility.service';
 import { RouterModule } from '@angular/router';
 import { routes } from './app.router';
+import { SharedService } from './shared.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +27,7 @@ import { routes } from './app.router';
     ReactiveFormsModule
     
   ],
-  providers: [DataService, UtilityService],
+  providers: [DataService, UtilityService,SharedService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
