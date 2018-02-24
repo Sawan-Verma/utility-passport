@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/toPromise';
 import { UtilityService } from '../utility.service';
+import { SharedService } from '../shared.service';
 
 @Component({
   selector: 'login',
@@ -11,6 +12,7 @@ import { UtilityService } from '../utility.service';
 })
 export class LoginComponent implements OnInit {
   myForm: FormGroup;
+  loginForm :FormGroup;
 
   firstName = new FormControl("", Validators.required);
   lastName = new FormControl("", Validators.required);      
@@ -18,13 +20,17 @@ export class LoginComponent implements OnInit {
   phoneNumber = new FormControl("", Validators.required);
   passportUniqueId = new FormControl("");
   propertyId = new FormControl("");
+
+  username = new FormControl("", Validators.required);
+  password = new FormControl("");
+
   myModal = true;
   public passUniqueId;
   private consumer;
   private errorMessage;
  
 
-  constructor(private router:Router, fb: FormBuilder, private utilityService:UtilityService ) {
+  constructor(private router:Router, fb: FormBuilder, private utilityService:UtilityService, private sharedService:SharedService ) {
     this.myForm = fb.group({
          
       firstName:this.firstName,
@@ -34,11 +40,18 @@ export class LoginComponent implements OnInit {
       passportUniqueId:this.passportUniqueId,
       propertyId:this.propertyId
 });
+this.loginForm = fb.group({         
+  username:this.username,
+  password:this.password
+});
    }
 
   ngOnInit() {
   }
-public login(){
+public login(loginForm){
+const formData =loginForm.value.username;
+const UPID = formData.replace('upid', '')
+this.sharedService.setdata(UPID);
   this.router.navigate(['dashboard']);
 }
 

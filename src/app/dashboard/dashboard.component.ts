@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { SharedService } from '../shared.service';
+import { Router } from '@angular/router';
 import { UtilityService } from '../utility.service';
-
+import { FormGroup, FormControl, Validators} from '@angular/forms';
 @Component({
   selector: 'dashboard',
   templateUrl: './dashboard.component.html',
@@ -9,16 +11,43 @@ import { UtilityService } from '../utility.service';
 export class DashboardComponent implements OnInit {
   count = 1;
   allTransactions = [];
+  addUtilityForm : FormGroup;
+  allUtility = [];
+  public uniquePassportId;
+  public firstName;
+  public lastName;
+  public age;
+  public phoneNumber;
   private errorMessage;
   private systemTransactions = [];
   private performedTransactions = [];
-  constructor(private httpService: UtilityService) {
+  constructor(private httpService: UtilityService,
+    private sharedService:SharedService,
+    private router:Router,
+) {
     }
 
   ngOnInit() {
     this.getAllTransactions();
-    
- 
+    this.getAllUtility();
+    this.createForm();
+    if(this.sharedService.getdata()){
+      this.uniquePassportId = this.sharedService.getdata()
+    }else{
+      this.router.navigate(['']);  
+    }
+    this.loadConsumerData(this.uniquePassportId);
+  }
+  createForm(){
+    this.addUtilityForm = new FormGroup({
+      "utilityType": new FormControl(''),
+      "startDate": new FormControl(''),
+      "endDate": new FormControl(''),
+      "supplier": new FormControl(''),
+    })
+  }
+  utilityDetails(event){
+    debugger;
   }
   getAllTransactions(){
     this.count = 0;
@@ -45,9 +74,6 @@ export class DashboardComponent implements OnInit {
       this.systemTransactions = systemList
       this.performedTransactions = performedList;
       this.allTransactions = tempList;
-      console.log(this.allTransactions);
-      console.log(this.systemTransactions);
-      console.log(this.performedTransactions);
     },
       error =>{
         if(error == 'Server error'){
@@ -60,6 +86,13 @@ export class DashboardComponent implements OnInit {
           this.errorMessage = error;
       }
   });
+  }
+  getAllUtility(){
+    this.httpService.get("http://localhost:3000/api/UtilityDetail")
+    .subscribe((res: any) =>{
+      this.allUtility = res;
+      debugger;
+    });
   }
   counter(){
     if(this.count <= this.allTransactions.length)
@@ -83,5 +116,15 @@ export class DashboardComponent implements OnInit {
         return ((x < y) ? -1 : ((x > y) ? 1 : 0));
     });
   }
-
+ loadConsumerData(id){
+   const url = 'http://localhost:3000/api/Consumer/'+id
+  this.httpService.get(url)
+  .toPromise()
+  .then((res:any) => { 
+      this.firstName= res.firstName;
+      this.lastName= res.lastName;
+      this.age= res.age;
+      this.phoneNumber=res.phoneNumber;
+  });
+ }
 }
