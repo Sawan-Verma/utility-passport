@@ -34,11 +34,11 @@
     float: left;
     color: #666;
 }
-.profile-detail ul li span{
-    display: inline-block;
+.profile-detail ul li >div{
     width: 20%;
+    float: left;
 }
-.profile-detail ul li span.detail{
+.profile-detail ul li >div.detail{
     margin-left:20%;
     width: 60%;
 }.associated-utility ul{
@@ -68,7 +68,7 @@
 .view-link{
     text-align: center;
     display: block;
-    color: #f99a12;
+    color: #f99a12 !important;
     cursor: pointer;
 }
 
@@ -91,7 +91,6 @@
     width: 275px;
     list-style: none;
     margin-left: 25px;
-    height: 150px;
     border: 1px solid #f99a12;
     display: inline-block;
     background: #fff;
@@ -102,5 +101,7 @@
     text-align: left;
     overflow-x: auto;
     white-space: initial;
-    height: 150px;
+    height: 220px;
+    word-wrap: break-word;
+    
 }

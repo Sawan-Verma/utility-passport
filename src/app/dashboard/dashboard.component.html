@@ -12,35 +12,20 @@
     </div>
     <div class="col-sm-10">
       <div class="profile-detail">
-        <h3>Utility passport Id -AHJJBCJHS542654</h3>
+        <h3>Utility passport Id - upid{{uniquePassportId}}</h3>
         <ul>
-          <li>
-            <span class="text-left">First Name</span>
-            <span class="text-left detail">ABC</span>
-          </li>
-          <li>
-            <span class="text-left">Last Name </span>
-            <span class="text-left detail">XYZ</span>
-          </li>
-          <li>
-            <span class="text-left">Address</span>
-            <span class="text-left detail">BangaloreBangalore BangaloreBangalore BangaloreBanga loreBangal oreBangalore</span>
-          </li>
-          <li>
-            <span class="text-left">Mobile</span>
-            <span class="text-left detail">3465757657</span>
-          </li>
-          <li>
-            <span class="text-left">Email Id</span>
-            <span class="text-left detail">dhsav@uehuf.com</span>
-          </li>
+          <li><div class="text-left">First Name</div><div class="text-left detail">{{firstName}}</div></li>
+          <li><div class="text-left">Last Name </div><div class="text-left detail">{{lastName}}</div></li>
+          <li><div class="text-left">Address</div><div class="text-left detail"> Prestige Shantiniketan, Crescent 3, 8th Floor, Main Rd, Whitefield, Bengaluru, Karnataka 560048, India</div></li>
+          <li><div class="text-left">Mobile</div><div class="text-left detail">{{phoneNumber}}</div></li>
         </ul>
       </div>
       <p class="reset"></p>
       <div class="associated-utility">
         <h3>Associated Utility</h3>
         <div class="float-right">
-          <button class="btn btn-utility" data-toggle="modal" data-target="#addUtilityModal">Add Utility</button>
+            <!-- <button class="btn btn-utility" >Switch Supplier</button> -->
+            <button class="btn btn-utility" data-toggle="modal" data-target="#addUtilityModal">Add Utility</button>
         </div>
 
         <ul class="reset">
@@ -49,7 +34,7 @@
               <img src="./../assets/images/British-Gas-logo.png" alt="">
             </div>
             <br/>
-            <a class="view-link" (click)="utilityDetails(x)">View / Edit</a>
+            <a class="view-link" data-toggle="modal" data-target="#switchUtilityModal" (click)="utilityDetails(x)">View / Edit</a>
           </li>
         </ul>
       </div>
@@ -59,19 +44,25 @@
 
 <div class="containter">
   <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-12"><p>
+        <p>
+        <p>
+        <p>
+        <p>
       <div class="transaction-block">
         <h3>All Transactions</h3>
         <ul>
-          <li class="block-list" *ngFor="let x of allTransactions">
+          <li class="block-list" *ngFor="let x of allTransactions; let i = index" >
             <div class="block">
               <p>
-                <b>Block No:</b>{{count}}
+                <b>Block No:</b>{{i+1}}
                 <p>
                   <p>
-                    <b>Transaction:</b> {{showDate(x.transactionTimestamp)}}</p>
+                    <b>TimeStamp:</b> {{showDate(x.transactionTimestamp)}}</p>
                   <p>
-                    <b>Transaction Type:</b> {{showTransactionType(x.transactionType)}}</p>
+                    <b> Type:</b> {{showTransactionType(x.transactionType)}}</p>
+                  <p>
+                    <b> Hash:</b> {{showTransactionType(x.transactionId)}}</p>
             </div>
           </li>
         </ul>
@@ -83,7 +74,6 @@
 
 <!-- Modal for add utility -->
 
-<!-- Modal -->
 <div id="addUtilityModal" class="modal open" role="dialog">
   <div class="modal-dialog">
 
@@ -144,3 +134,54 @@
     </div>
   </div>
 </div>
+
+<!-- Modal for switch utility -->
+
+<div id="switchUtilityModal" class="modal open" role="dialog">
+    <div class="modal-dialog">
+  
+      <!-- Modal content-->
+      <div class="modal-content login-dialog">
+        <div class="modal-header">
+          <h4 class="modal-title">Utility Detail - {{utilityData?.utilityUniqueId}}</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <form [formGroup]="switchUtilityForm">
+          <div class="modal-body">
+  
+            <div class="form-group text-left">
+              <label for="utilityType">Utility type</label>
+              <p><b>{{utilityData?.utilityType}}</b></p>
+            </div>
+            <div class="form-group text-left">
+              <label for="startDate">Start date</label>
+              <p><b>{{utilityData?.startDate}}</b></p>
+            </div>
+  
+            <div class="form-group text-left">
+              <label for="endDate">End date</label>
+              <p><b>{{utilityData?.endDate}}</b></p>
+            </div>
+            <div class="form-group text-left">
+                <label for="supplier">Supplier</label>
+                <p><b>{{utilityData?.supplierId}}</b></p>
+              </div>
+            <div class="form-group text-left">
+              <label for="supplier">New Supplier</label>
+              <select class="form-control" id="supplier" formControlName="newSupplier">
+                <option value="supplier1">Supplier 1 </option>
+                <option value="supplier2">Supplier 2 </option>
+                <option value="supplier3">Supplier 3 </option>
+                <option value="supplier4">Supplier 4 </option>
+              </select>
+            </div>
+          </div>
+  
+          <div class="modal-footer">
+            <button (click)="switchSupplierToNewSupp(switchUtilityForm);" type="submit" class="btn btn-utility" data-dismiss="modal">Switch suuplier</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

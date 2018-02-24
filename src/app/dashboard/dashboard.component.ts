@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { SharedService } from '../shared.service';
+import { Router } from '@angular/router';
 import { UtilityService } from '../utility.service';
 import { FormGroup, FormControl, Validators} from '@angular/forms';
 @Component({
@@ -7,20 +9,38 @@ import { FormGroup, FormControl, Validators} from '@angular/forms';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  count = 1;
-  allTransactions = [];
-  addUtilityForm : FormGroup;
-  allUtility = [];
+  public switchSupplier;
+  public count = 1;
+  public allTransactions = [];
+  public addUtilityForm : FormGroup;
+  public switchUtilityForm : FormGroup;
+  public allUtility = [];
+  public utilityData;
+  public uniquePassportId;
+  public firstName;
+  public lastName;
+  public age;
+  public phoneNumber;
   private errorMessage;
   private systemTransactions = [];
   private performedTransactions = [];
-  constructor(private httpService: UtilityService) {
+  constructor(private httpService: UtilityService,
+    private sharedService:SharedService,
+    private router:Router,
+) {
     }
 
   ngOnInit() {
     this.getAllTransactions();
     this.getAllUtility();
     this.createForm();
+    this.createSwitchForm();
+    if(this.sharedService.getdata()){
+      this.uniquePassportId = this.sharedService.getdata()
+    }else{
+      this.router.navigate(['']);  
+    }
+    this.loadConsumerData(this.uniquePassportId);
   }
   createForm(){
     this.addUtilityForm = new FormGroup({
@@ -30,8 +50,15 @@ export class DashboardComponent implements OnInit {
       "supplier": new FormControl(''),
     })
   }
+
+  createSwitchForm(){
+    this.switchUtilityForm = new FormGroup({
+      "newSupplier" : new FormControl('')
+    })
+  }
   utilityDetails(event){
-    debugger;
+    this.utilityData = event;
+    console.log(event);
   }
   getAllTransactions(){
     this.count = 0;
@@ -58,6 +85,9 @@ export class DashboardComponent implements OnInit {
       this.systemTransactions = systemList
       this.performedTransactions = performedList;
       this.allTransactions = tempList;
+    debugger;
+      
+      console.log(this.allTransactions);
     },
       error =>{
         if(error == 'Server error'){
@@ -100,4 +130,39 @@ export class DashboardComponent implements OnInit {
         return ((x < y) ? -1 : ((x > y) ? 1 : 0));
     });
   }
+ loadConsumerData(id){
+   const url = 'http://localhost:3000/api/Consumer/'+id
+  this.httpService.get(url)
+  .toPromise()
+  .then((res:any) => { 
+      this.firstName= res.firstName;
+      this.lastName= res.lastName;
+      this.age= res.age;
+      this.phoneNumber=res.phoneNumber;
+  });
+ }
+
+ switchSupplierToNewSupp(): Promise<any> {
+   const supplierform = this.switchUtilityForm.value;
+  this.switchSupplier = {
+        $class: "org.capita.SwitchSupplier",
+        "UD": "org.capita.UtilityDetail#" + this.utilityData.utilityUniqueId,
+        "newSupplier": "org.capita.Supplier#" + supplierform.newSupplier
+  }; 
+  return this.httpService.create('http://localhost:3000/api/SwitchSupplier',this.switchSupplier )
+  .toPromise()
+  .then(() => { 
+    this.getAllUtility();
+   });   
+}
+
+
+// {
+//   "$class": "org.capita.SwitchSupplier",
+//   "UD": {},
+//   "newSupplier": {},
+//   "transactionId": "string",
+//   "timestamp": "2018-02-24T09:00:37.267Z"
+// }'
+
 }
