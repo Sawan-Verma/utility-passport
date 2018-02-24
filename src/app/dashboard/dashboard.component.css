@@ -77,3 +77,11 @@
 .transaction-block ul{
     list-style: none;
 }
+.transaction-block ul li.block-list{
+    width: 150px;
+    list-style: none;
+    float: left;
+    margin-left: 25px;
+    height: 150px;
+    border: 1px solid #888;
+}
