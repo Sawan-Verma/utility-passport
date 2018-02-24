@@ -91,8 +91,7 @@ export class DashboardComponent implements OnInit {
     this.httpService.get("http://localhost:3000/api/UtilityDetail")
     .subscribe((res: any) =>{
       this.allUtility = res;
-      debugger;
-    });
+     });
   }
   counter(){
     if(this.count <= this.allTransactions.length)
@@ -121,10 +120,32 @@ export class DashboardComponent implements OnInit {
   this.httpService.get(url)
   .toPromise()
   .then((res:any) => { 
+    this.sharedService.setconsumer(res);
       this.firstName= res.firstName;
       this.lastName= res.lastName;
       this.age= res.age;
       this.phoneNumber=res.phoneNumber;
   });
+ }
+
+ public createUtility(data){
+  var consumerData =  this.sharedService.getconsmer();
+  const formdata = data.value;
+   const payload =  {
+    $class: "org.capita.UtilityDetail",
+    "utilityUniqueId": 'UID' + Math.floor((Math.random() * 100) + 1),
+    "utilityType": formdata.utilityType,
+    "propertyId": consumerData.propertyId,
+    "supplierId":  formdata.supplier,
+    "endDate": formdata.endDate,
+    "startDate": formdata.startDate,
+    "supplier": formdata.supplier
+  };
+  return this.httpService.create('http://localhost:3000/api/UtilityDetail',payload )
+  .toPromise()
+  .then(() => { 
+   this.getAllUtility();
+   });
+
  }
 }
