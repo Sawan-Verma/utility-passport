@@ -22,21 +22,9 @@
         <div class="associated-utility">
           <h3>Associated Utility</h3>
           <ul>
-            <li>
-              <div class="block"><img src="./../assets/images/Virgin_Mobile.png" alt=""></div>
-              <br/><a href="" class="view-link">View / Edit</a>
-            </li>
-            <li>
-              <div class="block"><img src="./../assets/images/Virgin_Mobile.png" alt=""></div>
-              <br/><a href="" class="view-link">View / Edit</a>
-            </li>
-            <li>
-              <div class="block"><img src="./../assets/images/Virgin_Mobile.png" alt=""></div>
-              <br/><a href="" class="view-link">View / Edit</a>
-            </li>
-            <li>
-              <div class="block"><img src="./../assets/images/Virgin_Mobile.png" alt=""></div>
-              <br/><a href="" class="view-link">View / Edit</a>
+            <li *ngFor= "let x of allUtility">
+              <div class="block"><img src="./../assets/images/British-Gas-logo.png" alt=""></div>
+              <br/><a class="view-link" (click)="utilityDetails(x)">View / Edit</a>
             </li>
           </ul>
         </div>
@@ -52,8 +40,8 @@
           <li class="block-list" *ngFor = "let x of allTransactions">
             <div class="block"> 
                 <p><b>Block No:</b>{{count}}<p>
-                <p><b>Transaction:</b> {{showDate(x.transactionTimestamp)}}</p>
-                <p><b>Transaction Type:</b> {{showTransactionType(x.transactionType)}}</p>
+                <p><b>Timestamp:</b> {{showDate(x.transactionTimestamp)}}</p>
+                <p><b>Type:</b> {{showTransactionType(x.transactionType)}}</p>
             </div>
           </li>
         </ul>

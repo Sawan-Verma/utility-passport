@@ -69,6 +69,7 @@
     text-align: center;
     display: block;
     color: #f99a12;
+    cursor: pointer;
 }
 
 .transaction-block{

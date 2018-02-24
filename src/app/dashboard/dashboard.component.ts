@@ -9,6 +9,7 @@ import { UtilityService } from '../utility.service';
 export class DashboardComponent implements OnInit {
   count = 1;
   allTransactions = [];
+  allUtility = [];
   private errorMessage;
   private systemTransactions = [];
   private performedTransactions = [];
@@ -17,8 +18,10 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.getAllTransactions();
-    
- 
+    this.getAllUtility();
+  }
+  utilityDetails(event){
+    debugger;
   }
   getAllTransactions(){
     this.count = 0;
@@ -45,9 +48,6 @@ export class DashboardComponent implements OnInit {
       this.systemTransactions = systemList
       this.performedTransactions = performedList;
       this.allTransactions = tempList;
-      console.log(this.allTransactions);
-      console.log(this.systemTransactions);
-      console.log(this.performedTransactions);
     },
       error =>{
         if(error == 'Server error'){
@@ -60,6 +60,13 @@ export class DashboardComponent implements OnInit {
           this.errorMessage = error;
       }
   });
+  }
+  getAllUtility(){
+    this.httpService.get("http://localhost:3000/api/UtilityDetail")
+    .subscribe((res: any) =>{
+      this.allUtility = res;
+      debugger;
+    });
   }
   counter(){
     if(this.count <= this.allTransactions.length)
