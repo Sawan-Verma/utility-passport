@@ -24,7 +24,8 @@
       <div class="associated-utility">
         <h3>Associated Utility</h3>
         <div class="float-right">
-          <button class="btn btn-utility" data-toggle="modal" data-target="#addUtilityModal">Add Utility</button>
+            <!-- <button class="btn btn-utility" >Switch Supplier</button> -->
+            <button class="btn btn-utility" data-toggle="modal" data-target="#addUtilityModal">Add Utility</button>
         </div>
 
         <ul class="reset">
@@ -33,7 +34,7 @@
               <img src="./../assets/images/British-Gas-logo.png" alt="">
             </div>
             <br/>
-            <a class="view-link" (click)="utilityDetails(x)">View / Edit</a>
+            <a class="view-link" data-toggle="modal" data-target="#switchUtilityModal" (click)="utilityDetails(x)">View / Edit</a>
           </li>
         </ul>
       </div>
@@ -67,7 +68,6 @@
 
 <!-- Modal for add utility -->
 
-<!-- Modal -->
 <div id="addUtilityModal" class="modal open" role="dialog">
   <div class="modal-dialog">
 
@@ -128,3 +128,53 @@
     </div>
   </div>
 </div>
+
+<!-- Modal for switch utility -->
+
+<div id="switchUtilityModal" class="modal open" role="dialog">
+    <div class="modal-dialog">
+  
+      <!-- Modal content-->
+      <div class="modal-content login-dialog">
+        <div class="modal-header">
+          <h4 class="modal-title">Utility Detail</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <form [formGroup]="addUtilityForm">
+          <div class="modal-body">
+  
+            <div class="form-group text-left">
+              <label for="utilityType">Utility type</label>
+              <p>cbcvb</p>
+            </div>
+            <div class="form-group text-left">
+              <label for="startDate">Start date</label>
+              <p>vvcbv</p>
+            </div>
+  
+            <div class="form-group text-left">
+              <label for="endDate">End date</label>
+              <p>cxxvcx</p>
+            </div>
+            <div class="form-group text-left">
+                <label for="supplier">Supplier</label>
+                <p>cxxvcx</p>
+              </div>
+            <div class="form-group text-left">
+              <label for="supplier">New Supplier</label>
+              <select class="form-control" id="supplier">
+                <option>Supplier 4 </option>
+                <option>Supplier 5 </option>
+                <option>Supplier 6 </option>
+              </select>
+            </div>
+          </div>
+  
+          <div class="modal-footer">
+            <button (click)="createAssetsBank(myForm);" type="submit" class="btn btn-utility" data-dismiss="modal">Switch suuplier</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
