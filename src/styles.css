@@ -344,3 +344,23 @@
   .reset{
     clear:both;
   }
+  .btn-utility{
+    color: #fff;
+    background-color: #f99a12;
+    border-color: #f99a12;
+    border-radius: 20px;
+    padding: .375rem 1.75rem;
+}
+.btn-utility:hover{
+    color: #fff;
+    background-color: #fd7e14;
+    border-color: #fd7e14;
+}
+
+.btn-default{
+  color: #333;
+  background-color: #ccc;
+  border-color: #ccc;
+  border-radius: 20px;
+  padding: .375rem 1.75rem;
+}

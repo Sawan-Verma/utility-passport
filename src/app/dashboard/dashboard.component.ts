@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UtilityService } from '../utility.service';
-
+import { FormGroup, FormControl, Validators} from '@angular/forms';
 @Component({
   selector: 'dashboard',
   templateUrl: './dashboard.component.html',
@@ -9,6 +9,7 @@ import { UtilityService } from '../utility.service';
 export class DashboardComponent implements OnInit {
   count = 1;
   allTransactions = [];
+  addUtilityForm : FormGroup;
   allUtility = [];
   private errorMessage;
   private systemTransactions = [];
@@ -19,6 +20,15 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.getAllTransactions();
     this.getAllUtility();
+    this.createForm();
+  }
+  createForm(){
+    this.addUtilityForm = new FormGroup({
+      "utilityType": new FormControl(''),
+      "startDate": new FormControl(''),
+      "endDate": new FormControl(''),
+      "supplier": new FormControl(''),
+    })
   }
   utilityDetails(event){
     debugger;
