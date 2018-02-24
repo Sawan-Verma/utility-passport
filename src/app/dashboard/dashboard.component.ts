@@ -20,6 +20,7 @@ export class DashboardComponent implements OnInit {
   public firstName;
   public lastName;
   public age;
+  consumerData;
   public phoneNumber;
   private errorMessage;
   private systemTransactions = [];
@@ -31,6 +32,7 @@ export class DashboardComponent implements OnInit {
     }
 
   ngOnInit() {
+    this.consumerData =  this.sharedService.getconsmer();
     this.getAllTransactions();
     this.getAllUtility();
     this.createForm();
@@ -104,9 +106,12 @@ export class DashboardComponent implements OnInit {
   getAllUtility(){
     this.httpService.get("http://localhost:3000/api/UtilityDetail")
     .subscribe((res: any) =>{
-      this.allUtility = res;
-      debugger;
-    });
+      const data = res;
+      data.forEach(element => {
+        if(element.propertyId ===  this.consumerData.propertyId)
+        this.allUtility.push(element);
+      });
+     });
   }
   counter(){
     if(this.count <= this.allTransactions.length)
@@ -135,6 +140,7 @@ export class DashboardComponent implements OnInit {
   this.httpService.get(url)
   .toPromise()
   .then((res:any) => { 
+    this.sharedService.setconsumer(res);
       this.firstName= res.firstName;
       this.lastName= res.lastName;
       this.age= res.age;
@@ -142,7 +148,7 @@ export class DashboardComponent implements OnInit {
   });
  }
 
- switchSupplierToNewSupp(): Promise<any> {
+ public switchSupplierToNewSupp(): Promise<any> {
    const supplierform = this.switchUtilityForm.value;
   this.switchSupplier = {
         $class: "org.capita.SwitchSupplier",
@@ -156,13 +162,24 @@ export class DashboardComponent implements OnInit {
    });   
 }
 
+ public createUtility(data){
 
-// {
-//   "$class": "org.capita.SwitchSupplier",
-//   "UD": {},
-//   "newSupplier": {},
-//   "transactionId": "string",
-//   "timestamp": "2018-02-24T09:00:37.267Z"
-// }'
+  const formdata = data.value;
+   const payload =  {
+    $class: "org.capita.UtilityDetail",
+    "utilityUniqueId": 'UID' + Math.floor((Math.random() * 100) + 1),
+    "utilityType": formdata.utilityType,
+    "propertyId": this.consumerData.propertyId,
+    "supplierId":  formdata.supplier,
+    "endDate": formdata.endDate,
+    "startDate": formdata.startDate,
+    "supplier": formdata.supplier
+  };
+  return this.httpService.create('http://localhost:3000/api/UtilityDetail',payload )
+  .toPromise()
+  .then(() => { 
+   this.getAllUtility();
+   });
 
+ }
 }
