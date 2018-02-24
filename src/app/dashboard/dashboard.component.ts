@@ -100,5 +100,4 @@ export class DashboardComponent implements OnInit {
         return ((x < y) ? -1 : ((x > y) ? 1 : 0));
     });
   }
-
 }

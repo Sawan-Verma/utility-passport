@@ -26,7 +26,6 @@ export class LoginComponent implements OnInit {
 
   constructor(private router:Router, fb: FormBuilder, private utilityService:UtilityService ) {
     this.myForm = fb.group({
-         
       firstName:this.firstName,
       lastName:this.lastName,  
       age:this.age,
