@@ -10,7 +10,7 @@
     color: #fa9a12;
     padding: 20px;
 }
-.dashboard h3{
+.dashboard h3, .transaction-block h3{
     border-bottom: 1px solid #8886;
     padding-bottom: 5px;
 }
@@ -73,15 +73,33 @@
 
 .transaction-block{
     width:100%;
+    margin-top:30px;
+    padding: 0px 30px;
 }
 .transaction-block ul{
     list-style: none;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+    margin-top: 30px;
+    background:  #f99a1263;
+    position: relative;
+    padding: 20px;
 }
 .transaction-block ul li.block-list{
-    width: 150px;
+    width: 275px;
     list-style: none;
-    float: left;
     margin-left: 25px;
     height: 150px;
-    border: 1px solid #888;
+    border: 1px solid #f99a12;
+    display: inline-block;
+    background: #fff;
+    padding: 10px;
+    color: #000;
+}
+.transaction-block ul li .block{ 
+    text-align: left;
+    overflow-x: auto;
+    white-space: initial;
+    height: 150px;
 }

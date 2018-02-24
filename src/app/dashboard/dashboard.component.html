@@ -47,17 +47,13 @@
   <div class="row">
     <div class="col-sm-12">
       <div class="transaction-block">
+        <h3>All Transactions</h3>
         <ul>
-          <li class="block-list">
-            <div class="block">
-              <p>Block No. 1</p>
-              <span></span>
-            </div>
-          </li>
-          <li class="block-list">
-            <div class="block">
-              <p>Block No. 1</p>
-              <span></span>
+          <li class="block-list" *ngFor = "let x of allTransactions">
+            <div class="block"> 
+                <p><b>Block No:</b>{{count}}<p>
+                <p><b>Transaction:</b> {{showDate(x.transactionTimestamp)}}</p>
+                <p><b>Transaction Type:</b> {{showTransactionType(x.transactionType)}}</p>
             </div>
           </li>
         </ul>
